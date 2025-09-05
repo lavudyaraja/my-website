@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge"
 import { Icons } from "@/components/ui/icons"
+import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { 
   Github, 
   Menu, 
@@ -70,18 +71,17 @@ export function Navbar({ className }: NavbarProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
           <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Icons.gitHub className="h-5 w-5 text-white" />
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center group-hover:scale-105 transition-transform duration-200 shadow-lg">
+                <Icons.gitHub className="h-6 w-6 text-white" />
               </div>
               <div>
-                <span className="font-bold text-xl">DevHub</span>
-                <div className="flex items-center space-x-1">
-                  <Badge variant="secondary" className="text-xs">
-                    AI
-                  </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    BETA
+                <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  DevHub
+                </span>
+                <div className="flex items-center space-x-1 -mt-1">
+                  <Badge variant="secondary" className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 border-0">
+                    AI-Powered
                   </Badge>
                 </div>
               </div>
@@ -128,6 +128,7 @@ export function Navbar({ className }: NavbarProps) {
 
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-4">
+            <ThemeToggle />
             {session ? (
               <div className="flex items-center space-x-3">
                 <Link href="/dashboard">

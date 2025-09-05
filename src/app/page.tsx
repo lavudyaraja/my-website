@@ -9,7 +9,7 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-24 text-center">
         <Badge variant="secondary" className="mb-4">
@@ -218,53 +218,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-background border-t py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Icons.gitHub className="h-6 w-6" />
-                <span className="font-bold text-lg">DevHub</span>
-              </div>
-              <p className="text-muted-foreground">
-                Advanced SaaS platform for modern developers
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><Link href="/features" className="hover:text-foreground">Features</Link></li>
-                <li><Link href="/pricing" className="hover:text-foreground">Pricing</Link></li>
-                <li><Link href="/docs" className="hover:text-foreground">Documentation</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><Link href="/about" className="hover:text-foreground">About</Link></li>
-                <li><Link href="/blog" className="hover:text-foreground">Blog</Link></li>
-                <li><Link href="/careers" className="hover:text-foreground">Careers</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li><Link href="/help" className="hover:text-foreground">Help Center</Link></li>
-                <li><Link href="/contact" className="hover:text-foreground">Contact</Link></li>
-                <li><Link href="/status" className="hover:text-foreground">Status</Link></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 DevHub. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }

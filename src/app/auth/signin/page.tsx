@@ -31,7 +31,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="container flex h-screen w-screen flex-col items-center justify-center">
+    <div className="container flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center py-12">
       <Card className="w-[400px]">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-center">Sign in</CardTitle>

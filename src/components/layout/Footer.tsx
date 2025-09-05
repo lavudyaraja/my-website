@@ -66,13 +66,15 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Icons.gitHub className="h-6 w-6 text-white" />
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <Icons.gitHub className="h-7 w-7 text-white" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold">DevHub</h3>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  DevHub
+                </h3>
                 <p className="text-sm text-muted-foreground">
-                  Advanced SaaS Developer Platform
+                  AI-Powered Developer Platform
                 </p>
               </div>
             </div>
