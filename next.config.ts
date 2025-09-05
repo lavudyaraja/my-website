@@ -1,25 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  // 禁用 Next.js 热重载，由 nodemon 处理重编译
-  reactStrictMode: false,
-  webpack: (config, { dev }) => {
-    if (dev) {
-      // 禁用 webpack 的热模块替换
-      config.watchOptions = {
-        ignored: ['**/*'], // 忽略所有文件变化
-      };
-    }
-    return config;
-  },
-  eslint: {
-    // 构建时忽略ESLint错误
-    ignoreDuringBuilds: true,
-  },
+  /**
+   * It's highly recommended to keep Strict Mode enabled to detect potential
+   * problems in your application early.
+   * @see https://react.dev/reference/react/StrictMode
+   */
+  reactStrictMode: true,
+  outputFileTracing: false,
+  // The `experimental.turbo` option has been removed from `next.config.js`.
+  // This was causing the TypeScript error. To use Turbopack for local
+  // development, run `next dev --turbo` from your command line.
 };
 
 export default nextConfig;
