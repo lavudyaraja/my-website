@@ -44,10 +44,11 @@ interface ProjectData {
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const projectId = params.id
+    const { id } = await params
+    const projectId = id
 
     // Fetch project from database
     const project = await db.project.findUnique({

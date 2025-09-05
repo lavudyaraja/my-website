@@ -7,7 +7,6 @@ const nextConfig: NextConfig = {
    * @see https://react.dev/reference/react/StrictMode
    */
   reactStrictMode: true,
-  outputFileTracing: false,
   // The `experimental.turbo` option has been removed from `next.config.js`.
   // This was causing the TypeScript error. To use Turbopack for local
   // development, run `next dev --turbo` from your command line.

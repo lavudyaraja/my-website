@@ -6,7 +6,7 @@ const stripeSecretKey = process.env.STRIPE_SECRET_KEY
 // Create Stripe instance only if we have a key, otherwise use a mock for development
 const stripe = stripeSecretKey 
   ? new Stripe(stripeSecretKey, {
-      apiVersion: "2024-12-18.acacia",
+      apiVersion: "2025-08-27.basil",
     })
   : null
 

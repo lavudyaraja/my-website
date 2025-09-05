@@ -3,10 +3,11 @@ import { db } from "@/lib/db"
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const projectId = params.id
+    const { id } = await params
+    const projectId = id
 
     // Check if project exists
     const project = await db.project.findUnique({

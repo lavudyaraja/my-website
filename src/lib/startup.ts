@@ -29,7 +29,7 @@ export function initializeApp() {
     console.log('')
 
     // Check for critical missing components
-    const criticalMissing = []
+    const criticalMissing: string[] = []
     if (!status.hasDatabase) criticalMissing.push('Database')
     if (!status.hasAuth) criticalMissing.push('Authentication')
     if (!status.hasGithubToken) criticalMissing.push('GitHub Token')

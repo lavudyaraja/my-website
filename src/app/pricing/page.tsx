@@ -96,7 +96,7 @@ export default function PricingPage() {
               <Button 
                 className="w-full mt-6" 
                 variant={index === 1 ? "default" : "outline"}
-                onClick={() => handleSubscribe(plan.priceId, plan.name)}
+                onClick={() => handleSubscribe(plan.priceId || null, plan.name)}
                 disabled={isLoading === plan.name}
               >
                 {isLoading === plan.name ? (

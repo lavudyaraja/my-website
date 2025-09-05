@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { headers } from "next/headers"
 import stripe from "@/lib/stripe"
+import { Stripe } from "stripe"
 import { db } from "@/lib/db"
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
@@ -15,9 +16,10 @@ export async function POST(request: Request) {
     }
 
     const body = await request.text()
-    const signature = headers().get("stripe-signature")!
+    const headersList = await headers()
+    const signature = headersList.get("stripe-signature")!
 
-    let event: stripe.Event
+    let event: Stripe.Event
 
     try {
       event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
@@ -30,19 +32,19 @@ export async function POST(request: Request) {
     switch (event.type) {
       case "customer.subscription.created":
       case "customer.subscription.updated":
-        const subscription = event.data.object as stripe.Subscription
+        const subscription = event.data.object as Stripe.Subscription
         await handleSubscriptionChange(subscription)
         break
       case "customer.subscription.deleted":
-        const deletedSubscription = event.data.object as stripe.Subscription
+        const deletedSubscription = event.data.object as Stripe.Subscription
         await handleSubscriptionDeletion(deletedSubscription)
         break
       case "invoice.payment_succeeded":
-        const invoice = event.data.object as stripe.Invoice
+        const invoice = event.data.object as Stripe.Invoice
         await handlePaymentSuccess(invoice)
         break
       case "invoice.payment_failed":
-        const failedInvoice = event.data.object as stripe.Invoice
+        const failedInvoice = event.data.object as Stripe.Invoice
         await handlePaymentFailure(failedInvoice)
         break
       default:
@@ -56,12 +58,12 @@ export async function POST(request: Request) {
   }
 }
 
-async function handleSubscriptionChange(subscription: stripe.Subscription) {
+async function handleSubscriptionChange(subscription: Stripe.Subscription) {
   try {
     const customerId = subscription.customer as string
     const priceId = subscription.items.data[0]?.price?.id
     const status = subscription.status.toUpperCase() as any
-    const currentPeriodEnd = new Date(subscription.current_period_end * 1000)
+    const currentPeriodEnd = new Date((subscription as any).current_period_end * 1000)
 
     // Find user by Stripe customer ID
     const userSubscription = await db.subscription.findFirst({
@@ -84,8 +86,12 @@ async function handleSubscriptionChange(subscription: stripe.Subscription) {
     } else {
       // Create new subscription
       // Get user ID from customer metadata
+      if (!stripe) {
+        console.error("Stripe is not configured")
+        return
+      }
       const customer = await stripe.customers.retrieve(customerId)
-      const userId = customer.metadata?.userId
+      const userId = customer.deleted ? null : customer.metadata?.userId
 
       if (userId) {
         await db.subscription.create({
@@ -105,7 +111,7 @@ async function handleSubscriptionChange(subscription: stripe.Subscription) {
   }
 }
 
-async function handleSubscriptionDeletion(subscription: stripe.Subscription) {
+async function handleSubscriptionDeletion(subscription: Stripe.Subscription) {
   try {
     await db.subscription.updateMany({
       where: {
@@ -120,9 +126,9 @@ async function handleSubscriptionDeletion(subscription: stripe.Subscription) {
   }
 }
 
-async function handlePaymentSuccess(invoice: stripe.Invoice) {
+async function handlePaymentSuccess(invoice: Stripe.Invoice) {
   try {
-    const subscriptionId = invoice.subscription as string
+    const subscriptionId = (invoice as any).subscription as string
     
     if (subscriptionId) {
       await db.subscription.updateMany({
@@ -139,9 +145,9 @@ async function handlePaymentSuccess(invoice: stripe.Invoice) {
   }
 }
 
-async function handlePaymentFailure(invoice: stripe.Invoice) {
+async function handlePaymentFailure(invoice: Stripe.Invoice) {
   try {
-    const subscriptionId = invoice.subscription as string
+    const subscriptionId = (invoice as any).subscription as string
     
     if (subscriptionId) {
       await db.subscription.updateMany({
