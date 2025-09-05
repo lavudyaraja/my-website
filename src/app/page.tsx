@@ -25,6 +25,15 @@ export default function Home() {
           Connect GitHub repos, view commits, explore file trees, generate AI prompts, 
           visualize architecture diagrams, create public showcases, and share your projects—all in one powerful platform.
         </p>
+        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg max-w-md mx-auto">
+          <div className="flex items-center gap-2 text-yellow-700">
+            <Icons.spinner className="h-4 w-4" />
+            <span className="text-sm font-medium">Setup Required</span>
+          </div>
+          <p className="text-xs text-yellow-600 mt-1">
+            Authentication needs to be configured. See SETUP_AUTH.md
+          </p>
+        </div>
         <div className="flex gap-4 justify-center">
           <Button size="lg" asChild>
             <Link href="/auth/signin">
